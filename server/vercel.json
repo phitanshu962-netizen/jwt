@@ -14,9 +14,5 @@
       "src": "/(.*)",
       "dest": "src/index.ts"
     }
-  ],
-  "env": {
-    "ACCESS_TOKEN_SECRET": "@access_token_secret",
-    "REFRESH_TOKEN_SECRET": "@refresh_token_secret"
-  }
+  ]
 }
