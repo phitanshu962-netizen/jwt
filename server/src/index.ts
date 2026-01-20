@@ -53,14 +53,18 @@ import { createAccessToken, createRefreshToken } from "./auth";
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   });
 
+  console.log("🔄 Initializing database connection...");
   await initializeDatabase();
+  console.log("✅ Database initialization complete");
 
+  console.log("🔄 Building GraphQL schema...");
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [UserResolver]
     }),
     context: ({ req, res }) => ({ req, res })
   });
+  console.log("✅ GraphQL schema built");
 
   apolloServer.applyMiddleware({ app, cors: false });
 
