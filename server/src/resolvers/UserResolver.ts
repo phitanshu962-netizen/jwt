@@ -81,7 +81,7 @@ export class UserResolver {
       const payload: any = require("jsonwebtoken").verify(token, process.env.ACCESS_TOKEN_SECRET!)
       const user = await User.findOne({ where: { id: payload.userId } })
       if (user) {
-        user.tokenVersion += 1
+        user.tokenVersion = user.tokenVersion + 1
         await user.save()
       }
     } catch (err) {
