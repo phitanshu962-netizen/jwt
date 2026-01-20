@@ -1,6 +1,7 @@
 import { Resolver, Mutation, Arg, Query, Ctx } from "type-graphql"
 import { User } from "../entity/User"
 import { RegisterInput, LoginInput, AuthResponse, LoginResponse } from "../types/AuthTypes"
+import { AppDataSource } from "../data-source"
 import bcrypt from "bcryptjs"
 import { createAccessToken, createRefreshToken } from "../auth"
 import { sendRefreshToken } from "../sendRefreshToken"
@@ -90,6 +91,12 @@ export class UserResolver {
     }
 
     sendRefreshToken(res, "")
+    return true
+  }
+
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(@Arg("userId") userId: number): Promise<boolean> {
+    await User.update({ id: userId }, { tokenVersion: () => "tokenVersion + 1" })
     return true
   }
 
